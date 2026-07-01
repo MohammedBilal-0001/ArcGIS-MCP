@@ -21,25 +21,33 @@ This project demonstrates how an AI assistant can discover and retrieve ArcGIS c
 ## Tech Stack
 
 - Python 3.11+
-- Anthropic MCP SDK
-- HTTPX
-- Pydantic
+- MCP SDK (`mcp` Python package)
+- `httpx` for async HTTP calls
+- `pydantic` + `pydantic-settings` for typed config and models
 - ArcGIS REST API
 
 ---
 
-## Project Structure
+## Architecture
+
+This project is structured around a small, composable MCP server that exposes ArcGIS functionality as tools. High-level layers:
+
+- Client: `services/arcgis_client.py` — thin HTTP client around the ArcGIS REST API using `httpx`.
+- Builders: `services/query_builder.py` — helpers to construct ArcGIS search and query strings.
+- Models: `models/` — typed `pydantic` models for responses and items.
+- Tools: `tools/` — MCP tool functions wired into the MCP server in `server.py`.
+
+Project layout:
 
 ```
 arcgis-mcp/
-│
 ├── models/          # Pydantic models
-├── services/        # ArcGIS REST client
-├── builders/        # Query builders
-├── tools/           # MCP tools
-├── tests/           # Development tests
-├── config.py
-├── server.py
+├── services/        # ArcGIS REST client + query builders
+├── tools/           # MCP tools (search, query)
+├── tests/           # Development scripts / tests
+├── config.py        # Pydantic Settings-based config
+├── server.py        # FastMCP server wiring
+├── requirements.txt # Python dependencies
 └── README.md
 ```
 
@@ -56,7 +64,12 @@ cd arcgis-mcp
 
 ### 2. Install dependencies
 
+Create and activate a virtual environment, then install:
+
 ```bash
+python -m venv .venv
+source .venv/bin/activate   # macOS / Linux
+.venv\Scripts\activate     # Windows (PowerShell)
 pip install -r requirements.txt
 ```
 
@@ -71,6 +84,8 @@ arcgis_portal_url=https://www.arcgis.com
 Or provide the portal URL through your MCP client configuration.
 
 ### 4. Start the MCP server
+
+Run the MCP server which registers the available tools and listens for MCP client connections:
 
 ```bash
 python server.py
