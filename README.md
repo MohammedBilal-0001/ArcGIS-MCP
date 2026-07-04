@@ -115,15 +115,15 @@ python server.py
 
 ## Screenshots
 
-### Search Portal Content
+### Search and query Portal Content 
 
-> *(Add screenshot here)*
+> ![Architecture](https://github.com/MohammedBilal-0001/ArcGIS-MCP/blob/main/Images/Screenshot%202026-06-19%20194949.png "searching portal and quering the feature layers")
 
 ---
 
-### Query Feature Layer
+### generate reports based on results
 
-> *(Add screenshot here)*
+> ![Architecture](https://github.com/MohammedBilal-0001/ArcGIS-MCP/blob/main/Images/ArcGIS%20_mcp_test_1.png "Asking for fire risk analysis")
 
 ---
 
